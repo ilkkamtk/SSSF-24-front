@@ -262,12 +262,12 @@ addSpeciesForm.addEventListener('submit', async (e) => {
         species_name: species.value,
         location: locationData,
         category: category_id,
-        image: 'https://placekitten.com/640/480',
       },
     },
     localStorage.getItem('token')!,
   );
-  speciesData.addSpecies.species_name === species.value && updateSpecies();
+  speciesData.addSpecies.species.species_name === species.value &&
+    updateSpecies();
   targetModal.innerHTML = createMessageModal('Species added');
   myModal.show();
   setTimeout(() => {
@@ -341,7 +341,7 @@ addAnimalForm.addEventListener('submit', async (e) => {
     },
     token,
   );
-  animalData.addAnimal.animal_name === animal.value && updateAnimals();
+  animalData.addAnimal.animal.animal_name === animal.value && updateAnimals();
   targetModal.innerHTML = createMessageModal('Animal added');
   myModal.show();
   setTimeout(() => {
