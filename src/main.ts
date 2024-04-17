@@ -326,11 +326,14 @@ addAnimalForm.addEventListener('submit', async (e) => {
     apiURL,
     addAnimal,
     {
-      animalName: animal.value,
-      location: locationData,
-      species: species_id,
-      birthdate: birthdateData,
-      image: imageUploadData.data.filename,
+      animal: {
+        animal_name: animal.value,
+        location: locationData,
+        species: species_id,
+        birthdate: birthdateData,
+        image: imageUploadData.data.filename,
+        gender: 'male',
+      },
     },
     token,
   );
