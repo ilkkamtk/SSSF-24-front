@@ -236,6 +236,7 @@ addCategoryForm.addEventListener('submit', async (e) => {
 const addSpeciesForm = document.querySelector(
   '#add-species-form',
 ) as HTMLFormElement;
+
 addSpeciesForm.addEventListener('submit', async (e) => {
   e.preventDefault();
   const species = addSpeciesForm.querySelector(
@@ -257,9 +258,12 @@ addSpeciesForm.addEventListener('submit', async (e) => {
     apiURL,
     addSpecies,
     {
-      speciesName: species.value,
-      location: locationData,
-      category: category_id,
+      species: {
+        species_name: species.value,
+        location: locationData,
+        category: category_id,
+        image: 'https://placekitten.com/640/480',
+      },
     },
     localStorage.getItem('token')!,
   );

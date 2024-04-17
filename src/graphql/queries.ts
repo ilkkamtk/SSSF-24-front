@@ -84,9 +84,11 @@ mutation AddCategory($categoryName: String!) {
 `;
 
 const addSpecies = `
-mutation AddSpecies($speciesName: String!, $category: ID!, $location: InputPoint!) {
-  addSpecies(species_name: $speciesName, category: $category, location: $location) {
-    species_name
+mutation AddSpecies($species: SpeciesInput!) {
+  addSpecies(species: $species) {
+    species {
+      species_name
+    }
   }
 }
 `;
