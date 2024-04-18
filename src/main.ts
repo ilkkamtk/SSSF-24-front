@@ -25,6 +25,11 @@ import { User } from './interfaces/User';
 import updateUserPanel from './domFunctions/updateUserPanel';
 import { UploadResponse } from './interfaces/UploadResponse';
 import { Point } from 'geojson';
+import { io, Socket } from 'socket.io-client';
+import {
+  ClientToServerEvents,
+  ServerToClientEvents,
+} from './interfaces/Socket';
 
 // Global variables
 const apiURL = import.meta.env.VITE_API_URL;
@@ -355,3 +360,28 @@ addAnimalForm.addEventListener('submit', async (e) => {
 updateAnimals();
 updateSpecies();
 updateCategories();
+
+// socket.io client
+const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(
+  import.meta.env.VITE_SOCKET_URL,
+);
+
+socket.on('addAnimal', (msg) => {
+  updateAnimals();
+  targetModal.innerHTML = '';
+  targetModal.insertAdjacentHTML('afterbegin', createMessageModal(msg));
+  myModal.show();
+  setTimeout(() => {
+    myModal.hide();
+  }, 2000);
+});
+
+socket.on('addSpecies', (msg) => {
+  updateSpecies();
+  targetModal.innerHTML = '';
+  targetModal.insertAdjacentHTML('afterbegin', createMessageModal(msg));
+  myModal.show();
+  setTimeout(() => {
+    myModal.hide();
+  }, 2000);
+});
