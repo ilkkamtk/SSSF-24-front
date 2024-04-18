@@ -59,17 +59,21 @@ map.setView([0, 0], 1);
 // check token
 const token = localStorage.getItem('token');
 
+const checkTokenFromApi = async (token: string) => {
+  const isTokenValid = await doGraphQLFetch(apiURL, checkToken, {}, token);
+  if (isTokenValid.checkToken?.message === 'Token is valid') {
+    console.log('token valid');
+    loginButton.parentElement!.classList.add('d-none');
+    logoutButton.parentElement!.classList.remove('d-none');
+    forms.classList.remove('d-none');
+    user.user_name = isTokenValid.checkToken.user.user_name;
+    updateUserPanel(user);
+  }
+};
+
 if (token !== null) {
   try {
-    const isTokenValid = await doGraphQLFetch(apiURL, checkToken, {}, token);
-    if (isTokenValid.checkToken?.message === 'Token is valid') {
-      console.log('token valid');
-      loginButton.parentElement!.classList.add('d-none');
-      logoutButton.parentElement!.classList.remove('d-none');
-      forms.classList.remove('d-none');
-      user.user_name = isTokenValid.checkToken.user.user_name;
-      updateUserPanel(user);
-    }
+    checkTokenFromApi(token);
   } catch (error) {
     console.log(error);
   }
